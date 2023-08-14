@@ -1,4 +1,5 @@
-﻿using DemoLibrary.Models;
+﻿using DemoLibrary.Commands;
+using DemoLibrary.Models;
 using DemoLibrary.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -7,8 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DemoApi.Controllers
 {
-    
-
     [Route("api/[controller]")]
     [ApiController]
     public class PersonController : ControllerBase
@@ -22,22 +21,14 @@ namespace DemoApi.Controllers
 
         // GET: api/<PersonController>
         [HttpGet]
-        public async Task<List<PersonModel>> Get()
-        {
-            return await _mediator.Send(new GetPersonListQuery());
-        }
+        public async Task<List<PersonModel>> Get() => await _mediator.Send(new GetPersonListQuery());
 
         // GET api/<PersonController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        public async Task<PersonModel> Get(int id) => await _mediator.Send(new GetPersonByIdQuery(id));
 
         // POST api/<PersonController>
         [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        public async Task<PersonModel> Post([FromBody] PersonModel value) => await _mediator.Send(new InsertPersonCommand(value.FirstName, value.LastName));
     }
 }

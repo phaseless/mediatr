@@ -24,4 +24,9 @@ public class DemoDataAccess : IDataAccess
         _people.Add(p);
         return p;
     }
+
+    public PersonModel GetPerson(int requestId)
+    {
+        return _people.FirstOrDefault(p => p.Id == requestId);
+    }
 }

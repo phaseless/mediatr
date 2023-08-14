@@ -6,4 +6,5 @@ public interface IDataAccess
 {
     List<PersonModel> GetPeople { get; }
     PersonModel InsertPerson(string firstName, string lastName);
+    PersonModel GetPerson(int requestId);
 }
